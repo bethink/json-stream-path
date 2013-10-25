@@ -78,13 +78,10 @@ module JSON
         instance_eval(&block) if block_given?
       end
 
-      def parse(json, jpath)
+      def parse(json, jpath=nil)
+        jpath && jpath.strip!
 
-        return nil if jpath.nil?
-        jpath.strip!
-        return nil if jpath.empty?
-
-        if (jpath.match(/^\/$/))
+        if (jpath.nil? || jpath.match(/^\/$/) || jpath.empty?)
           return self.class.parse(json)
         end
 
