@@ -1,0 +1,28 @@
+{
+    "root":{
+        "one":"one-key",
+        "two":["two1-key", "two2-key"],
+        "three":{
+            "three1":"three1-key",
+            "three2":"three2-key"
+        },
+        "four":[
+            {
+                "four-hash":{
+                    "four1":"four1-key"
+                }
+            },
+            {
+                "four-array":["four1", "four2"]
+            },
+            {
+                "four-string":"four-string"
+            },
+            {
+                "four-number":12.1
+            }
+
+        ]
+    },
+    "sibling":"sibling-key"
+}
