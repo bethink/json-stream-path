@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Json::Stream::Path::VERSION
   spec.authors       = ["Manojs"]
   spec.email         = ["manojs.nitt@gmail.com"]
-  spec.description   = %q{Gem desc}
-  spec.summary       = %q{Gem summary}
-  spec.homepage      = "http://www.google.com"
+  spec.description   = %q{A streaming JSON parser (generates SAX-like events) and "JSON Path" like implementation to parse small amount of data in a large JSON file.}
+  spec.summary       = %q{A parser best suited for huge JSON documents that don't fit in memory and to parse small amount of data in a large JSON file.}
+  spec.homepage      = "https://github.com/bethink/json-stream-path"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

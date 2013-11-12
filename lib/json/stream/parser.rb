@@ -145,7 +145,9 @@ module JSON
                   @partial_stack << :key
                 end
 
-                if (@partial_stack[-1] == :key || @partial_stack[-1] == :start_array || @partial_stack[-1] == :start_object)
+                poped_partial_stack_value = @partial_stack[-1]
+
+                if ( poped_partial_stack_value == :key || poped_partial_stack_value == :start_array || poped_partial_stack_value == :start_object)
                   if (name == :start_array)
                     @partial_stack << :start_array
                   elsif (name == :start_object)
@@ -153,7 +155,7 @@ module JSON
                   end
                 end
 
-                if (@partial_stack[-1] == :key)
+                if (poped_partial_stack_value == :key)
                   #if (name == :start_array)   # this commented code in all the elsif block moved up to reduce the code
                   #  @partial_stack << :start_array
                   #elsif (name == :start_object)
@@ -163,19 +165,19 @@ module JSON
                     @stop_parsing = true
                     @partial_stack.pop
                   end
-                elsif (@partial_stack[-1] == :start_array)
+                elsif (poped_partial_stack_value == :start_array)
                   if (name == :end_array)
                     @partial_stack.pop
-                    if (@partial_stack[-1] == :key)
+                    if (poped_partial_stack_value == :key)
                       @parsing_area = false
                       @stop_parsing = true
                       @partial_stack.pop
                     end
                   end
-                elsif (@partial_stack[-1] == :start_object)
+                elsif (poped_partial_stack_value == :start_object)
                   if (name == :end_object)
                     @partial_stack.pop
-                    if (@partial_stack[-1] == :key)
+                    if (poped_partial_stack_value == :key)
                       @parsing_area = false
                       @stop_parsing = true
                       @partial_stack.pop
@@ -197,7 +199,12 @@ module JSON
         (@utf8 << data).each_char do |ch|
 
           if (@stop_parsing)
+            #notify_end_object
+            #notify_end_document
+            #end_container(:object)
+            puts "========== #{@stack.inspect} ========="
             #print ch
+            #break
           end
 
           @pos += 1
