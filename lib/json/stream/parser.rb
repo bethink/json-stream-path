@@ -202,7 +202,7 @@ module JSON
             #notify_end_object
             #notify_end_document
             #end_container(:object)
-            puts "========== #{@stack.inspect} ========="
+            #puts "========== #{@stack.inspect} ========="
             #print ch
             #break
           end
