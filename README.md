@@ -24,31 +24,22 @@ Or install it yourself as:
 
 ## Usage
 
-To parse part of data from JSON file.
+To parse subset of data from JSON file.
 
-    stream = File.open('path/to/json-file.json')
     parser = JSON::Stream::Parser.new
+    stream = File.open('path/to/json-file.json')
     hash = parser.parse(stream, '/json/path')
 
 
 To parse whole JSON file
 
-    stream = File.open('path/to/json-file.json')
     parser = JSON::Stream::Parser.new
+    stream = File.open('path/to/json-file.json')
     hash = parser.parse(stream)
 
-
-Note:
-File should be a valid JSON.
-JSON Path is not fully implemented.
-Now just path can be mentioned like "/root/path".
-
-For the other basic usage Refer https://github.com/dgraham/json-stream
+For the other basic usage refer https://github.com/dgraham/json-stream
 
 Thanks to David Graham for his JSON Stream https://github.com/dgraham/json-stream
-
-## Contact
-MANOJ: manojs.nitt@gmail.com
 
 ## Contributing
 
