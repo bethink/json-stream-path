@@ -26,6 +26,7 @@ Or install it yourself as:
 
 To parse subset of data from JSON file.
 
+    require 'json/stream'
     parser = JSON::Stream::Parser.new
     stream = File.open('path/to/json-file.json')
     hash = parser.parse(stream, '/json/path')
@@ -33,6 +34,7 @@ To parse subset of data from JSON file.
 
 To parse whole JSON file
 
+    require 'json/stream'
     parser = JSON::Stream::Parser.new
     stream = File.open('path/to/json-file.json')
     hash = parser.parse(stream)
@@ -40,6 +42,10 @@ To parse whole JSON file
 For the other basic usage refer https://github.com/dgraham/json-stream
 
 Thanks to David Graham for his JSON Stream https://github.com/dgraham/json-stream
+
+Future Enhancements:
+    Implement full stack JSON Path
+    Option to get hash or JSON
 
 ## Contributing
 
