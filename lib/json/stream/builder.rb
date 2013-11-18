@@ -29,17 +29,14 @@ module JSON
       end
 
       def end_document
-        #puts "====EOD===== #{@stack.inspect} ========\n"
         @result = @stack.pop.obj
       end
 
       def start_object
-        #puts "BUILDER: ========= #{@stack.inspect} ========\n"
         @stack.push(ObjectNode.new)
       end
 
       def end_object
-        #puts "BUILDER: ========= #{@stack.inspect} ========\n"
         unless @stack.size == 1
           node = @stack.pop
           @stack[-1] << node.obj
@@ -48,17 +45,14 @@ module JSON
       alias :end_array :end_object
 
       def start_array
-        #puts "BUILDER: ========= #{@stack.inspect} ========\n"
         @stack.push(ArrayNode.new)
       end
 
       def key(key)
-        #puts "BUILDER: ========= #{@stack.inspect} ========\n"
         @stack[-1] << key
       end
 
       def value(value)
-        #puts "BUILDER: ========= #{@stack.inspect} ========\n"
         @stack[-1] << value
       end
     end

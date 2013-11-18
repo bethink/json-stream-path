@@ -74,6 +74,7 @@ module JSON
         @stack, @unicode, @buf, @pos = [], "", "", -1
         @partial_stack = []
         @jpath, @jpath_tree = nil, nil
+        @parsing_area = false
         @stop_parsing = nil
         instance_eval(&block) if block_given?
       end
@@ -89,6 +90,7 @@ module JSON
         @jpath_tree = JPathTree.new(jpath)
         stream = json.is_a?(String) ? StringIO.new(json) : json
         builder = Builder.new(self)
+
         while (buf = stream.read(BUF_SIZE)) != nil
           self << buf
         end
@@ -110,14 +112,8 @@ module JSON
         define_method("notify_#{name}") do |*args|
 
           @listeners[name].each do |block|
-            #puts "----------------------------------------------"
-            #puts "#{name} ----- #{@parsing_area.inspect} ---- args #{args.inspect} --------- stack #{@stack.inspect} -------- State #{@state.inspect} --------- Partial Stack #{@partial_stack.inspect} ------ \n\n"
-            #puts "----------------------------------------------\n"
 
-            name = name.intern
-
-            if (!@jpath) # If use not used jpath, it should parse whole file
-                         #puts "#{name} ----- #{@parsing_area.inspect} ---- args #{args.inspect} --------- stack #{@stack.inspect} -------- State #{@state.inspect} --------- Partial Stack #{@partial_stack.inspect} ------ \n\n"
+            if (!@jpath) # If not used jpath, it should parse whole file
               block.call(*args)
             else
 
@@ -132,12 +128,11 @@ module JSON
               end
 
               if (name == :end_document) # An :end_document call is required
-                                         #puts "#{name} ----- #{@parsing_area.inspect} ---- args #{args.inspect} --------- stack #{@stack.inspect} -------- State #{@state.inspect} --------- Partial Stack #{@partial_stack.inspect} ------ \n\n"
                 block.call(*args)
+                return
               end
 
               if (@parsing_area)
-                #puts "#{name} ----- #{@parsing_area.inspect} ---- args #{args.inspect} --------- stack #{@stack.inspect} -------- State #{@state.inspect} --------- Partial Stack #{@partial_stack.inspect} ------ \n\n"
                 block.call(*args)
 
                 if (name == :key and @partial_stack.empty?) # Reached first key in the parsable JSON area
@@ -147,7 +142,7 @@ module JSON
 
                 poped_partial_stack_value = @partial_stack[-1]
 
-                if ( poped_partial_stack_value == :key || poped_partial_stack_value == :start_array || poped_partial_stack_value == :start_object)
+                if (poped_partial_stack_value == :key || poped_partial_stack_value == :start_array || poped_partial_stack_value == :start_object)
                   if (name == :start_array)
                     @partial_stack << :start_array
                   elsif (name == :start_object)
@@ -156,10 +151,6 @@ module JSON
                 end
 
                 if (poped_partial_stack_value == :key)
-                  #if (name == :start_array)   # this commented code in all the elsif block moved up to reduce the code
-                  #  @partial_stack << :start_array
-                  #elsif (name == :start_object)
-                  #  @partial_stack << :start_object
                   if (name == :value)
                     @parsing_area = false
                     @stop_parsing = true
@@ -196,15 +187,10 @@ module JSON
       # generate callback events. This is well suited for an EventMachine
       # receive_data loop.
       def <<(data)
+
         (@utf8 << data).each_char do |ch|
 
           if (@stop_parsing)
-            #notify_end_object
-            #notify_end_document
-            #end_container(:object)
-            #puts "========== #{@stack.inspect} ========="
-            #print ch
-            #break
           end
 
           @pos += 1
