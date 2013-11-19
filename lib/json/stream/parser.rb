@@ -97,7 +97,7 @@ module JSON
 
         raise ParserError, "unexpected eof" unless builder.result
         result = builder.result
-        (result && result.values.first) || nil
+        (result && result.values.first)
       ensure
         stream.close unless stream.nil?
       end
