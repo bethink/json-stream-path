@@ -95,9 +95,8 @@ module JSON
           self << buf
         end
 
-        raise ParserError, "unexpected eof" unless builder.result
-        result = builder.result
-        (result && result.values.first)
+        #raise ParserError, "unexpected eof" unless builder.result
+        builder.result && builder.result.values.first
       ensure
         stream.close unless stream.nil?
       end
