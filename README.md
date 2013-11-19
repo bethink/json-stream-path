@@ -12,7 +12,8 @@ JSON Stream Path address this problem. Since path to parse in JSON is supplied a
 
 JSON Stream Path address this problem. Path to parse in JSON file is supplied as an argument. JSON Stream Path parses according to the path mentioned. So it consumes memory to create graph only for the subset of huge JSON data. Same way, final out come (hash) is the subset of huge JSON data which will again consume memory for the subset of huge JSON data.
 
-    Future releases will optimize memory and improve performance. Please keep update to the latest version.
+    Future releases will optimize memory and improve performance.
+    Please keep update to the latest version.
 
 
 ## Installation
