@@ -24,12 +24,19 @@ module JSON
         end
       end
 
+      def get_stack
+        @stack
+      end
+
       def start_document
         @stack, @result = [], nil
       end
 
       def end_document
-        @result = @stack.pop.obj
+        #puts "==== Builder: ====== stack #{@stack.inspect}"
+        unless @stack.blank?
+          @result = @stack.pop.obj
+        end
       end
 
       def start_object
@@ -42,6 +49,7 @@ module JSON
           @stack[-1] << node.obj
         end
       end
+
       alias :end_array :end_object
 
       def start_array
@@ -86,7 +94,7 @@ module JSON
           @obj[@key] = node
           @key = nil
         else
-          @key = node 
+          @key = node
         end
         self
       end
